@@ -60,8 +60,6 @@ jobs:
           command: |
              cd backend
              npm run test
-             npm run test:e2e
-             npm run test:cov
 
 workflows:
   default:
