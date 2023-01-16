@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   aws-cli: circleci/aws-cli@2.0.3
-  python: dialogue/python@3.8.2
+  python: circleci/python@2.1.1
 
 commands:
   destroy-environment:
@@ -113,7 +113,6 @@ jobs:
     docker:
       - image: cimg/base:stable
     steps:
-      - python/setup
       - aws-cli/setup
       - checkout
       - run:
@@ -151,6 +150,7 @@ jobs:
     docker:
       - image: cimg/base:stable
     steps:
+      - python/install-packages
       - aws-cli/setup
       - checkout
       - add_ssh_keys:
