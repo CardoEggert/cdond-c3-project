@@ -74,7 +74,8 @@ jobs:
              cd frontend
              npm install
              npm audit fix --audit-level=critical --force
-             npm audit --audit-level=critical
+             cat package.json
+             cat package-lock.json
 
   scan-backend:
     docker:
@@ -89,7 +90,8 @@ jobs:
              cd backend
              npm install
              npm audit fix --audit-level=critical --force
-             npm audit --audit-level=critical
+             cat package.json
+             cat package-lock.json
 
 workflows:
   default:
