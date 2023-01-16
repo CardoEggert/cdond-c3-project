@@ -2,7 +2,6 @@ version: 2.1
 
 orbs:
   aws-cli: circleci/aws-cli@2.0.3
-  python: circleci/python@2.1.1
 
 commands:
   destroy-environment:
@@ -148,13 +147,10 @@ jobs:
   
   configure-infrastructure:
     docker:
-      - image: cimg/base:stable
+      - image: python:3.12-rc-alpine
     steps:
-      - python/install-packages
-      - aws-cli/setup
       - checkout
       - add_ssh_keys:
-          # You can get this ID in the section where you registered the SSH Key
           fingerprints: ["29:93:9e:56:01:78:0f:d2:4a:ad:c1:92:4b:59:7d:1d"] 
       - attach_workspace:
           at: ~/
