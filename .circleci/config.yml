@@ -10,6 +10,7 @@ commands:
       workflow-identifier:
         type: string
     steps:
+      - aws-cli/setup
       - run:
           name: Destroy environments
           when: on_fail
