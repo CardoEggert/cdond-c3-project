@@ -14,8 +14,8 @@ commands:
           name: Destroy environments
           when: on_fail
           command: |
-            aws cloudformation delete --stack-name "udapeople-backend-<< parameters.workflow-identifier >>"
-            aws cloudformation delete --stack-name "udapeople-frontend-<< parameters.workflow-identifier >>"
+            aws cloudformation delete-stack --stack-name "udapeople-backend-<< parameters.workflow-identifier >>"
+            aws cloudformation delete-stack --stack-name "udapeople-frontend-<< parameters.workflow-identifier >>"
 jobs:
   build-frontend:
     docker:
@@ -144,7 +144,28 @@ jobs:
             - project/.circleci/ansible/inventory.txt
       - destroy-environment:
             workflow-identifier: ${CIRCLE_WORKFLOW_ID:0:7}
-
+  
+  configure-infrastructure:
+    docker:
+      - image: python:3.12-rc-alpine
+    steps:
+      - checkout
+      - add_ssh_keys:
+          # You can get this ID in the section where you registered the SSH Key
+          fingerprints: ["29:93:9e:56:01:78:0f:d2:4a:ad:c1:92:4b:59:7d:1d"] 
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update ansible
+      - run:
+          name: Configure server
+          command: |
+            ansible-playbook -i inventory.txt configure-server.yml
+      - destroy-environment:
+            workflow-identifier: ${CIRCLE_WORKFLOW_ID:0:7}
+               
 workflows:
   default:
     jobs:
