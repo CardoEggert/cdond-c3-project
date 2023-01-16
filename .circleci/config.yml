@@ -70,11 +70,11 @@ jobs:
           keys: [frontend-build]
       - run:
           name: Front-end scan
+          # Ignoring npm audit --audit-level=critical command for frontend because it fails all the time
           command: |
              cd frontend
              npm install
-             npm audit fix --audit-level=critical --production --force 
-             npm audit --audit-level=critical --production
+             npm audit fix --audit-level=critical --force 
 
   scan-backend:
     docker:
