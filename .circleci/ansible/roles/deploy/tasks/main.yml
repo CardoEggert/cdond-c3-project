@@ -16,10 +16,11 @@
 
 - name: "Stop previous pm2"
   command: pm2 stop default
+  ignore_errors: true
   args:
-    chdir: artifact/
+    chdir: ~/artifact/
 
 - name: "Start process again"
   command: pm2 start npm -- start
   args:
-    chdir: artifact/
+    chdir: ~/artifact/
