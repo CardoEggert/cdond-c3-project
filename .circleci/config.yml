@@ -196,6 +196,7 @@ jobs:
     docker:
       - image: cimg/base:stable
     steps:
+      executor: python/default
       - aws-cli/setup
       - node/install:
           node-version: '13.8.0' 
