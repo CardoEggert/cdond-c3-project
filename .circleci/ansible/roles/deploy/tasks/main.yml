@@ -2,7 +2,7 @@
 
 - name: "Copy artifact from local and unarchive to remote host"
   unarchive:
-    src: ./artifact.tar.gz
+    src: artifact.tar.gz
     dest: ~/artifact
 
 - name: Install dependencies
