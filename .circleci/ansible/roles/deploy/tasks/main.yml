@@ -1,5 +1,10 @@
 ---
 
+- name: "Create directory for artifact"
+  file:
+    src: ~/artifact
+    state: directory
+
 - name: "Copy artifact from local and unarchive to remote host"
   unarchive:
     src: artifact.tar.gz
