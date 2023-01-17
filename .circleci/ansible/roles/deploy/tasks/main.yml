@@ -1,0 +1,16 @@
+---
+
+- name: "Copy artifact from local and unarchive to remote host"
+  unarchive:
+    src: ./artifact.tar.gz
+    dest: ~/artifact
+
+- name: Install dependencies
+  npm:
+    path: ~/artifact
+
+- name: "Stop previous pm2 and start a new one"
+  command: |
+  cd artifact
+  pm2 stop default
+  pm2 start npm -- start
