@@ -9,8 +9,12 @@
   npm:
     path: ~/artifact
 
-- name: "Stop previous pm2 and start a new one"
-  command: |
-  cd artifact
-  pm2 stop default
-  pm2 start npm -- start
+- name: "Stop previous pm2"
+  command: pm2 stop default
+  args:
+    chdir: artifact/
+
+- name: "Start process again"
+  command: pm2 start npm -- start
+  args:
+    chdir: artifact/
