@@ -195,8 +195,8 @@ jobs:
   deploy-frontend:
     docker:
       - image: cimg/base:stable
+    executor: python/default
     steps:
-      executor: python/default
       - aws-cli/setup
       - node/install:
           node-version: '13.8.0' 
