@@ -17,8 +17,8 @@ commands:
           when: on_fail
           command: |
             aws s3 rm s3://udapeople-<< parameters.workflow-identifier >> --recursive
-            aws cloudformation delete-stack --stack-name "udapeople-backend-<< parameters.workflow-identifier >>"
-            aws cloudformation delete-stack --stack-name "udapeople-frontend-<< parameters.workflow-identifier >>"
+            aws cloudformation delete-stack --stack-name "be-udapeople-<< parameters.workflow-identifier >>"
+            aws cloudformation delete-stack --stack-name "fe-udapeople-<< parameters.workflow-identifier >>"
 
   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow.
@@ -142,7 +142,7 @@ jobs:
             aws cloudformation deploy \
               --template-file .circleci/files/backend.yml \
               --tags project=udapeople-${CIRCLE_WORKFLOW_ID:0:7} \
-              --stack-name "udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --stack-name "be-udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
       - run:
           name: Ensure front-end infrastructure exist
@@ -150,7 +150,7 @@ jobs:
             aws cloudformation deploy \
               --template-file .circleci/files/frontend.yml \
               --tags project=udapeople-${CIRCLE_WORKFLOW_ID:0:7} \
-              --stack-name "udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --stack-name "fe-udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"
       - run:
           name: Add back-end ip to ansible inventory
@@ -364,12 +364,12 @@ jobs:
         - run:
             name: Remove old stacks and files
             command: |
-              if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
+              if [[ "${STACKS[@]}" =~ "be-${OldWorkflowID}" ]]
               then
                 echo "----- Delete confirmed -----"
                 aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
-                aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
-                aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
+                aws cloudformation delete-stack --stack-name "be-udapeople-${OldWorkflowID}"
+                aws cloudformation delete-stack --stack-name "fe-udapeople-${OldWorkflowID}"
               else
                 echo "----- Nothing to clean up -----"
               fi
