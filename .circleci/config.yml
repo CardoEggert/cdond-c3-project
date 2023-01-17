@@ -210,10 +210,6 @@ jobs:
             echo "API_URL = ${API_URL}"
             echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
             cat frontend/.env
-      - run: 
-          name: Install NPM
-          command: |
-            sudo npm install -g npm@latest
       - run:
           name: Deploy frontend objects
           command: |
@@ -234,11 +230,6 @@ jobs:
           fingerprints: ["29:93:9e:56:01:78:0f:d2:4a:ad:c1:92:4b:59:7d:1d"] 
       - attach_workspace:
           at: ~/
-      - run:
-          name: Install python
-          command: |
-            sudo apt-get update
-            sudo apt-get install python3.8 python3-pip
       - run:
           name: Install Ansible
           command: |
