@@ -195,7 +195,6 @@ jobs:
   deploy-frontend:
     docker:
       - image: cimg/base:stable
-    executor: python/default
     steps:
       - aws-cli/setup
       - node/install:
@@ -203,12 +202,6 @@ jobs:
       - checkout
       - restore_cache:
           keys: [frontend-build]
-      - python/install-packages:
-          pkg-manager: pip
-      - run:
-          name: Install ansible
-          command: |
-            apk add --update ansible
       - run:
           name: Install npm
           command: |
