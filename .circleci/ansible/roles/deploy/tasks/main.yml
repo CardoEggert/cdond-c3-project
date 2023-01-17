@@ -2,7 +2,7 @@
 
 - name: "Create directory for artifact"
   file:
-    src: ~/artifact
+    path: ~/artifact
     state: directory
 
 - name: "Copy artifact from local and unarchive to remote host"
