@@ -9,6 +9,11 @@
   npm:
     path: ~/
 
+- name: Run build
+  command: npm run build
+  args:
+    chdir: ~/
+
 - name: "Stop previous pm2"
   command: pm2 stop default
   ignore_errors: true
