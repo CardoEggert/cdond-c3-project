@@ -226,8 +226,6 @@ jobs:
       - image: cimg/base:stable
     steps:
       - aws-cli/setup
-      - node/install:
-          node-version: '13.8.0' 
       - checkout
       - add_ssh_keys:
           fingerprints: ["29:93:9e:56:01:78:0f:d2:4a:ad:c1:92:4b:59:7d:1d"] 
