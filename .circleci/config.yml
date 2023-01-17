@@ -356,7 +356,10 @@ jobs:
                       list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
                       --no-paginate --output text)
               echo OldWorkflowID: "${OldWorkflowID}"
-              echo OldWorkflowID with prefix: "be-udapeople-${OldWorkflowID}"
+              export OldWorkflowIdWithBackendPrefix="be-udapeople-${OldWorkflowID}"
+              echo OldWorkflowID with backend prefix: "${OldWorkflowIdWithBackendPrefix}"
+              export OldWorkflowIdWithFrontendPrefix="fe-udapeople-${OldWorkflowID}"
+              echo OldWorkflowID with frontend prefix: "${OldWorkflowIdWithFrontendPrefix}"
               echo CIRCLE_WORKFLOW_ID "${CIRCLE_WORKFLOW_ID:0:7}"
               # Fetch the stack names          
               export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
@@ -365,14 +368,20 @@ jobs:
         - run:
             name: Remove old stacks and files
             command: |
-              if [[ "${STACKS[@]}" =~ "be-udapeople-${OldWorkflowID}" ]]
+              if [[ "${STACKS[@]}" =~ "${OldWorkflowIdWithFrontendPrefix}" ]]
               then
-                echo "----- Delete confirmed -----"
+                echo "----- Delete frontend stack confirmed -----"
                 aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
-                aws cloudformation delete-stack --stack-name "be-udapeople-${OldWorkflowID}"
                 aws cloudformation delete-stack --stack-name "fe-udapeople-${OldWorkflowID}"
               else
-                echo "----- Nothing to clean up -----"
+                echo "----- No frontend stack to clean up -----"
+              fi
+              if [[ "${STACKS[@]}" =~ "${OldWorkflowIdWithBackendPrefix}" ]]
+              then
+                echo "----- Delete backend stack confirmed -----"
+                aws cloudformation delete-stack --stack-name "be-udapeople-${OldWorkflowID}"
+              else
+                echo "----- No backend stack to clean up -----"
               fi
 
 workflows:
