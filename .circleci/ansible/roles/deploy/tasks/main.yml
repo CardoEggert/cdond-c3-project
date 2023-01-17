@@ -1,26 +1,21 @@
 ---
 
-- name: "Create directory for artifact"
-  file:
-    path: ~/artifact
-    state: directory
-
 - name: "Copy artifact from local and unarchive to remote host"
   unarchive:
     src: artifact.tar.gz
-    dest: ~/artifact
+    dest: ~/
 
 - name: Install dependencies
   npm:
-    path: ~/artifact
+    path: ~/
 
 - name: "Stop previous pm2"
   command: pm2 stop default
   ignore_errors: true
   args:
-    chdir: ~/artifact/
+    chdir: ~/
 
 - name: "Start process again"
   command: pm2 start npm -- start
   args:
-    chdir: ~/artifact/
+    chdir: ~/
