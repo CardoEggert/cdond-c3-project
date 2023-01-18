@@ -364,7 +364,7 @@ jobs:
         - run:
             name: Get old stack workflow id & remove old stacks
             command: |
-              OldWorkFlowId=$(cat OldWorkFlowId.txt)
+              export OldWorkFlowId=$(cat OldWorkFlowId.txt)
               export OldWorkflowIdWithBackendPrefix="be-udapeople-${OldWorkFlowId}"
               echo OldWorkflowID with backend prefix: "${OldWorkflowIdWithBackendPrefix}"
               export OldWorkflowIdWithFrontendPrefix="fe-udapeople-${OldWorkFlowId}"
