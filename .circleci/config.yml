@@ -344,7 +344,7 @@ jobs:
               --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
               --tags project=udapeople-${CIRCLE_WORKFLOW_ID:0:7}
       - save_cache:
-          key: old-worklow-id-cache
+          key: old-worklow-id-cache-${CIRCLE_WORKFLOW_ID:0:7}
           paths:
             - OldWorkFlowId.txt
       - destroy-environment:
@@ -360,7 +360,7 @@ jobs:
         - checkout
         - restore_cache:
             keys:
-              - old-worklow-id-cache
+              - old-worklow-id-cache-${CIRCLE_WORKFLOW_ID:0:7}
         - run:
             name: Get old stack workflow id & remove old stacks
             command: |
