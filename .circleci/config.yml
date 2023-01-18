@@ -285,7 +285,7 @@ jobs:
             ansible-playbook -i inventory.txt deploy-backend.yml
       - run:
           name: Wait for a few seconds for deploy backend pm2 to start up
-          command: sleep 5
+          command: sleep 20
       - destroy-environment:
             workflow-identifier: ${CIRCLE_WORKFLOW_ID:0:7}
       - revert-migrations:
