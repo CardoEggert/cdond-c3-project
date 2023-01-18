@@ -350,7 +350,7 @@ jobs:
         - aws-cli/setup
         - checkout
         - run:
-            name: Get old stack workflow id
+            name: Get old stack workflow id & remove old stacks
             command: |
               export OldWorkflowID=$(aws cloudformation \
                       list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
@@ -365,12 +365,6 @@ jobs:
               export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
                       --stack-status-filter CREATE_COMPLETE --no-paginate --output text)) 
               echo Stack names: "${STACKS[@]}" 
-        - run:
-            name: Remove old stacks and files
-            command: |
-              echo Stack names: "${STACKS[@]}" 
-              echo OldWorkflowID with frontend prefix: "${OldWorkflowIdWithFrontendPrefix}"
-              echo OldWorkflowID with backend prefix: "${OldWorkflowIdWithBackendPrefix}"
               if [[ "${STACKS[@]}" =~ "${OldWorkflowIdWithFrontendPrefix}" ]]
               then
                 echo "----- Delete frontend stack confirmed -----"
