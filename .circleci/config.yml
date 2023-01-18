@@ -336,8 +336,8 @@ jobs:
             export OldWorkflowID=$(aws cloudformation \
                     list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
                     --no-paginate --output text)
-            echo "${OldWorkflowID}" >> ~/OldWorkFlowId.txt
-            cat ~/OldWorkFlowId.txt
+            echo "${OldWorkflowID}" >> OldWorkFlowId.txt
+            cat OldWorkFlowId.txt
             aws cloudformation deploy \
               --template-file .circleci/files/cloudfront.yml \
               --stack-name InitialStack \
