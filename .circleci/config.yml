@@ -368,6 +368,9 @@ jobs:
         - run:
             name: Remove old stacks and files
             command: |
+              echo Stack names: "${STACKS[@]}" 
+              echo OldWorkflowID with frontend prefix: "${OldWorkflowIdWithFrontendPrefix}"
+              echo OldWorkflowID with backend prefix: "${OldWorkflowIdWithBackendPrefix}"
               if [[ "${STACKS[@]}" =~ "${OldWorkflowIdWithFrontendPrefix}" ]]
               then
                 echo "----- Delete frontend stack confirmed -----"
