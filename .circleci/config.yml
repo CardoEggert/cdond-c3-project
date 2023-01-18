@@ -343,10 +343,10 @@ jobs:
               --stack-name InitialStack \
               --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
               --tags project=udapeople-${CIRCLE_WORKFLOW_ID:0:7}
-      - persist_to_workspace:
-          root: ~/
+      - save_cache:
+          key: old-worklow-id-cache
           paths:
-            - project/OldWorkFlowId.txt
+            - OldWorkFlowId.txt
       - destroy-environment:
             workflow-identifier: ${CIRCLE_WORKFLOW_ID:0:7}
       - revert-migrations:
@@ -358,12 +358,13 @@ jobs:
       steps:
         - aws-cli/setup 
         - checkout
-        - attach_workspace:
-            at: ~/
+        - restore_cache:
+            keys:
+              - old-worklow-id-cache
         - run:
             name: Get old stack workflow id & remove old stacks
             command: |
-              OldWorkFlowId=$(cat ~/OldWorkFlowId.txt)
+              OldWorkFlowId=$(cat OldWorkFlowId.txt)
               export OldWorkflowIdWithBackendPrefix="be-udapeople-${OldWorkFlowId}"
               echo OldWorkflowID with backend prefix: "${OldWorkflowIdWithBackendPrefix}"
               export OldWorkflowIdWithFrontendPrefix="fe-udapeople-${OldWorkFlowId}"
